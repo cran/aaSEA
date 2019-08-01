@@ -1,0 +1,134 @@
+---
+title:"aaSEA Documentation"
+author:"Rajasekhara Reddy D.M."
+date:"17 July 2019"
+output:rmarkdown::html_vignette
+Vignette:>
+  %\VignetteIndexEntry{aaSEA Documentation}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(aaSEA)
+library(plotly)
+library(networkD3)
+library(knitr)
+```
+
+## Introduction
+
+The aaSEA package provides an unique and comprehensive tool kit for analyzing amino acid substitutions and consequences on physico chemical property changes. The amino acid properties included are extensively used in protein engineering.  
+
+
+## An example workflow
+The typical work flow begins with "fasta"" formatted multiple sequence alignment (MSA). For convenience an example alignment file is provided and it can be read into R environment as follows. 
+
+### Assessment of single vs Multiple substitutions and associated property changes 
+```{r}
+myMSA <- system.file("extdata", "linB_Prot_ali.fasta",package = "aaSEA") 
+myMSA
+```
+
+The alignment file location should be passed to "getAASub" function. This function will compute sites with single substitutions and multiple substitutions and returns a list of three data frames namely "SingleSub", "multiSub" and "All"
+
+```{r}
+sub <- getAASub(myMSA)
+str(sub)
+```
+
+"singleSub" file is a data frame with sites where single amino acid substitutions occurred. This file has four columns namely "substitution", "wt", "mu" and "site"
+
+```{r}
+head(sub$singleSub)
+```
+
+"multiSub" file is a data frame with sites where more than one amino acid substitutions occurred. This file has four columns namely "substitution", "wt", "mu" and "site"
+
+```{r}
+head(sub$multiSub)
+```
+
+Now calculate desired property changes. To compute the changes in desired properties, aaSEA offers three groups of physico checmial properties namely "Cruciani", "Fasgai", "Kidera" or all the properties listed in "AAindex". Once the property is decided we use "getPropChange"" function. this function takes one of the two (single or multi) substitution files obtained, property data frame i.e. Cruciani/Fasgai/Kidera/AAindex and the row number of the property in the data frame. 
+
+ * **Cruciani** data frame has :
+     + 1. Polarity
+     + 2. Hydrophobicity
+     + 3. H-bonding
+
+* **Fasgai** data frame has :
+    + 1. Hydrophobicity index
+    + 2. Alpha and turn propensities
+    + 3. Bulky properties
+    + 4. Compositional characteristic index
+    + 5. Local flexibility
+    + 6. Electronic properties
+
+* **Kidera** data frame has :
+    + 1. Helix/bend preference
+    + 2. Side-chain size
+    + 3. Extended structure preference
+    + 4. Hydrophobicity
+    + 5. Double-bend preference
+    + 6. Partial specific volume
+    + 7. Flat extended preference
+    + 8. Occurrence in alpha region
+    + 9. pK-C
+    + 10. Surrounding hydrophobicity
+
+* **AAIndex** data frame has standard 544 AAindex entries.
+
+```{r}
+propChanges <- getPropChange(subFile = sub$singleSub, propertyDF = "Cruciani", propertyIndex = 1)
+head(propChanges)
+```
+
+  These property changes could be visualized as sorted bar graphs using "plotSingleSubChange"
+
+```{r fig1, fig.height = 5, fig.width = 9, warning=FALSE}
+plotSingleSubChange(singleSubChangeDF = propChanges)
+```
+
+  Similarly we can compute property changes for each of individual substitutions where there are multiple substitutions are reported. a Heat map will be of great tool to visualize these results. 
+```{r fig2, fig.height=5, fig.width= 9}
+multiPropChange <- getPropChange(subFile = sub$multiSub, propertyDF = "cruciani", propertyIndex = 2)
+plotMultiSubChange(multiSubChange = multiPropChange)
+```
+
+### Assessment of correlated mutations and associated property changes
+
+in **aaSEA** Correlated mutations could be computed by any of the four methods viz. MIP, McBASC, ELSC and OMES. Default method is McBASC. 
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+corSites <- getCorSites(fileLoc = myMSA, corMethod = "mcbasc") # can use any of the "omes", "elsc", "mip"
+dim(corSites)
+```
+
+  At this step we have scanned through our multiple sequence alignment matrix and picked the sites that are having co-evolving sites as per the method of choice.
+  Now from this selected columns we must get the wild type residue, residue position and substitution. this can be achieved by using "getTopSub"" function as shown below
+  
+```{r}
+corPairs <- getTopSub(corSites)
+head(corPairs)
+```
+
+  Now these co-evolving Pairs can be visualized by using simple network graph using "plotCorNet" function
+```{r fig3, fig.height=5, fig.width= 9}
+  plotCorNet(corPairs)
+```
+
+  Using these pairs, we could compute the property change at individual site of co-evolving pairs upon substitution. This will help us to find the magnitude and direction of change between co-evolving sites. 
+```{r fig.width=9, paged.print=FALSE}
+coPropChanges = getCorPropChange( corSubFile = corPairs, propertyDF = "Cruciani", propertyIndex = 1)
+head(coPropChanges)
+```
+  
+  Alternatively, we could find correlated substitutions pairs for a given property. 
+  
+```{r fig4, fig.height=5, fig.width= 9}
+propCor <- getPropCorr(selMat = corSites, propertyDF = "curciani",propertyIndex = 1)
+head(propCor)
+plotCorSubChanges(propCor)
+```
+  

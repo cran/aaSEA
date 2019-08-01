@@ -1,0 +1,14 @@
+#' A data frame of correlated sites.
+#'
+#' This file is output of 'getTopSub' function with subset of alignment as input. This subset alignment is output of 'getCorSite' function
+#'
+#'
+#'
+#' @format A data frame with 2 Columns representing positional pairs:
+#' \describe{
+#'   \item{Pos1}{Position one prefixed with Wt amino acid and suffixed with substitution}
+#'   \item{Pos2}{Position two prefixed with Wt amino acid and suffixed with substitution}
+#'   ...
+#' }
+"corSubFile"
+
