@@ -15,27 +15,27 @@ getCorSites <- function(fileLoc,
 # caliculate Correlated sites
   resDF <- data.frame()
 # read alignment for cor site selection
-  myali <- import.fasta(fileLoc, aa.to.upper = TRUE, gap.to.dash = TRUE)
+  myali <- Bios2cor::import.fasta(fileLoc, aa.to.upper = TRUE, gap.to.dash = TRUE)
 # read alignment for matrix generation
   myali1 <- read.alignment(fileLoc, format = "fasta", forceToLower = FALSE)
   mymat <- toupper(as.matrix(myali1))
 # Calculate correlated sites
     if(corMethod == "mip"){
-    mi <- mip(align = myali, diag = 0, gap_val = 0.5, z_score = TRUE)
-    resDF <- mat2df(mi$gross, mi$normalized)
-    colnames(resDF) <- c("Pos1", "Pos2", "MutualInfo", "Normalized_MI")
+    mi <- mip(align = myali, gap_ratio = 0.2)
+    resDF <- mat2df(mi$score, mi$Zscore)
+    colnames(resDF) <- c("Pos1", "Pos2", "MutualInfo", "Zscore")
   } else if(corMethod == "elsc"){
-    el <- elsc(align = myali, gap_val = 0.5, z_score = TRUE)
-    resDF <- mat2df(el$gross, el$normalized)
-    colnames(resDF) <- c("Pos1", "Pos2", "ELSC", "Normalized_ELSC")
+    el <- elsc(align = myali,  gap_ratio = 0.2)
+    resDF <- mat2df(el$score, el$Zscore)
+    colnames(resDF) <- c("Pos1", "Pos2", "ELSC", "Zscore")
   } else if(corMethod == "mcbasc"){
-    mb <- mcbasc(align = myali, gap_val = 0.5, z_score = TRUE)
-    resDF <- mat2df(mb$gross, mb$normalized)
-    colnames(resDF) <- c("Pos1", "Pos2", "McBASC", "Normalized_McBASC")
+    mb <- mcbasc(align = myali,  gap_ratio = 0.2)
+    resDF <- mat2df(mb$score, mb$Zscore)
+    colnames(resDF) <- c("Pos1", "Pos2", "McBASC", "Zscore")
   } else {
-    om <- omes(align = myali, gap_val = 0.5, z_score = TRUE)
-    resDF <- mat2df(om$gross, om$normalized)
-    colnames(resDF) <- c("Pos1", "Pos2", "OMES", "Normalized_OMES")
+    om <- omes(align = myali,  gap_ratio = 0.2)
+    resDF <- mat2df(om$score, om$Zscore)
+    colnames(resDF) <- c("Pos1", "Pos2", "OMES", "Zscore")
   }
   resDF$Pos1 <- gsub(pattern = "[A-Z, a-z]",replacement = "", resDF$Pos1)
   resDF$Pos2 <- gsub(pattern = "[A-Z, a-z]",replacement = "", resDF$Pos2)

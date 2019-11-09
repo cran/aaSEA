@@ -27,7 +27,7 @@ The typical work flow begins with "fasta"" formatted multiple sequence alignment
 
 ### Assessment of single vs Multiple substitutions and associated property changes 
 ```{r}
-myMSA <- system.file("extdata", "linB_Prot_ali.fasta",package = "aaSEA") 
+myMSA <- system.file("extdata", "linB_Prot_ali.fasta", package = "aaSEA") 
 myMSA
 ```
 

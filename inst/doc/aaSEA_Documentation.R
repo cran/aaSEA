@@ -6,7 +6,7 @@ library(networkD3)
 library(knitr)
 
 ## ------------------------------------------------------------------------
-myMSA <- system.file("extdata", "linB_Prot_ali.fasta",package = "aaSEA") 
+myMSA <- system.file("extdata", "linB_Prot_ali.fasta", package = "aaSEA") 
 myMSA
 
 ## ------------------------------------------------------------------------

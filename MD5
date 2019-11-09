@@ -1,4 +1,4 @@
-0ada024d3cd3f8cfe40d1f916481a96c *DESCRIPTION
+b1f07e9b6653031ddf3819609290f357 *DESCRIPTION
 e93bbc81f3f635d1a6f3add06fddf5d3 *NAMESPACE
 8c00a28b9fe19bd1472be728f60543ce *R/AAindex.R
 6fa56d160588b6a640a40b00505f4f89 *R/Cruciani.R
@@ -7,7 +7,7 @@ e93bbc81f3f635d1a6f3add06fddf5d3 *NAMESPACE
 a1161ea78c23abd9f6e014e31760f643 *R/corSubFile.R
 638ff5ffbd35f2735ab384725c905546 *R/getAASub.R
 9988db3807662f930bec7951beacf9c4 *R/getCorPropChange.R
-9b0f5a512791255d12c4794fbd7715cd *R/getCorSites.R
+3b5743f978c809ef7ee92ef8d305868c *R/getCorSites.R
 2208b45007ebe8326012edf52295d811 *R/getPropChange.R
 47fb7e2462648e2b9986eea8677caa30 *R/getPropCorr.R
 860303fc977b3c9463981c0e710ede60 *R/getTopSub.R
@@ -25,9 +25,9 @@ a3ca6390486cd87a8bd7583684fd4cfc *R/plotSingleSubChange.R
 3ce0d24b8927e8954ac7cbc2fb20e1c6 *data/Fasgai.rda
 21f13a2310f57a5929827f3cda75e293 *data/Kidera.rda
 4242cf806e156039f58fbc44e968cc5f *data/corSubFile.rda
-b06ca330cd12a1306d9e01f2fbe25ef6 *inst/doc/aaSEA_Documentation.R
-71502a1be40e5874254481e87da4e3fe *inst/doc/aaSEA_Documentation.Rmd
-56aac54de10272e349ddf2f9d3eec4e4 *inst/doc/aaSEA_Documentation.html
+34cf6b4f0e79bdfb4cafc913653a4296 *inst/doc/aaSEA_Documentation.R
+4fa8e21c4e238a3c48b5854b63573e5e *inst/doc/aaSEA_Documentation.Rmd
+33f3c41b680803af5c5e79fd15ebcf38 *inst/doc/aaSEA_Documentation.html
 422f78f370b371cafa429873bcb196b3 *inst/extdata/aliMat.rda
 b27a41ba5027df9044e9fdb3462b93fa *inst/extdata/corSitePropChangeDF.rda
 9c45444aef2296c35635ff25cc1dee4e *inst/extdata/linB_Prot_ali.fasta
@@ -63,4 +63,4 @@ de099b29f1667688b7cef93567515f5f *man/getPropCorr.Rd
 97fc04655910b23e223b702de3752ce7 *man/plotMultiSubChange.Rd
 d52ca41ccbe1ade906e24860cdd848f7 *man/plotSingleSubChange.Rd
 219e2fe20ca19d6ca08f3a58f76237a2 *man/startSeaShiny.Rd
-71502a1be40e5874254481e87da4e3fe *vignettes/aaSEA_Documentation.Rmd
+4fa8e21c4e238a3c48b5854b63573e5e *vignettes/aaSEA_Documentation.Rmd
